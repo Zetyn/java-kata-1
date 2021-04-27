@@ -16,8 +16,4 @@ public class MainApp {
         System.out.println("search");
         b.search();
     }
-    protected static String getHelloWorldText() {
-        return "Hello world!";
-    }
-
 }
