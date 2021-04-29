@@ -5,16 +5,16 @@ import java.io.IOException;
 public class MainApp {
 
     public static void main(String[] args) throws IOException  {
-        ReadCSV_SortList b = new ReadCSV_SortList();
+        ReadCSVSortList rsl = new ReadCSVSortList();
         System.out.println("Books");
-        b.readBooks();
+        rsl.readBooks();
         System.out.println("Magazines");
-        b.readMagazines();
+        rsl.readMagazines();
         System.out.println("Authors");
-        b.readAuthors();
-        b.sort();
-        System.out.println("search");
-        b.search();
+        rsl.readAuthors();
+        rsl.sort();
+        System.out.println("Search");
+        rsl.search();
     }
 
 }
