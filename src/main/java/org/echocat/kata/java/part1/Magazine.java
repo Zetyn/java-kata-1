@@ -1,7 +1,7 @@
 package org.echocat.kata.java.part1;
 
 
-public class Magazines {
+public class Magazine {
     private String title,isbn,author,publishedAt;
 
     public String getTitle() {
