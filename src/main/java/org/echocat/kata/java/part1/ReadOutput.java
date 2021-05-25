@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ReadCSVSortList  {
+public class ReadOutput  {
 
     List<Books> bookList = new ArrayList<>();
     List<Books> bookSort = new ArrayList<>(bookList);
