@@ -1,6 +1,6 @@
 package org.echocat.kata.java.part1;
 
-public class Books {
+public class Book {
 
     private String title,isbn,author,description;
     
