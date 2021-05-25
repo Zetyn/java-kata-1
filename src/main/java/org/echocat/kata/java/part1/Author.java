@@ -1,6 +1,6 @@
 package org.echocat.kata.java.part1;
 
-public class Authors {
+public class Author {
     String email,firstName,lastName;
 
     public String getEmail() {
