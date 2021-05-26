@@ -1,9 +1,13 @@
 package org.echocat.kata.java.part1;
 
+import java.time.LocalDate;
 
 public class Magazine {
-    private String title,isbn,author,publishedAt;
-
+    private String title;
+    private String isbn;
+    private String author;
+    private LocalDate publishedAt;
+    
     public String getTitle() {
         return title;
     }
@@ -22,15 +26,23 @@ public class Magazine {
     public void setAuthor(String author) {
         this.author = author;
     }
-    public String getPublishedAt() {
+    public LocalDate getPublishedAt() {
         return publishedAt;
     }
-    public void setPublishedAt(String publishedAt) {
+    public void setPublishedAt(LocalDate publishedAt) {
         this.publishedAt = publishedAt;
     }
     
     @Override
     public String toString() {
-        return "\ntitle: " + getTitle() + "\nisbn: " + getIsbn() + "\nautor: " + getAuthor() + "\npublishedAt: " + getPublishedAt();
+        return "\ntitle: " 
+        + getTitle() 
+        + "\nisbn: " 
+        + getIsbn() 
+        + "\nautor: " 
+        + getAuthor() 
+        + "\npublishedAt: " 
+        + getPublishedAt();
     }
+    
 }
