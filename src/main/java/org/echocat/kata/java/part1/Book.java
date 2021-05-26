@@ -15,7 +15,7 @@ public class Book {
     public String getIsbn() {
         return isbn;
     }
-
+    
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
@@ -35,6 +35,7 @@ public class Book {
     public void setDescription(String description) {
         this.description = description;
     }
+    
     @Override
     public String toString() {
         return "\ntitle: " + getTitle() + "\nisbn: " + getIsbn() + "\nautor: " + getAuthor() + "\ndescription: " + getDescription();

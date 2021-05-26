@@ -21,6 +21,7 @@ public class Author {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
     public String toString() {
         return "\nEmail: " + getEmail() + "\nFirstName: " + getFirstName() + "\nLastName: " + getLastName();
     }
