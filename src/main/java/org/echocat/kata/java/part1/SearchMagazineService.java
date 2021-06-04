@@ -1,0 +1,57 @@
+package main.java.org.echocat.kata.java.part1;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.echocat.kata.java.part1.Magazine;
+
+
+public class SearchMagazineService {
+
+    public Magazine searchByIsbn(List<Magazine> magazines, String isbn) {
+        Magazine magazine = new Magazine();
+        for (int i = 0;i < magazines.size();i++) {
+            if (magazines.get(i).getIsbn().equals(isbn)) {
+                for (int j = 0; j <= 3; j++) {
+                    if (j == 0) {
+                        magazine.setTitle(magazines.get(i).getTitle());
+                    } else if (j == 1) {
+                        magazine.setIsbn(magazines.get(i).getIsbn());
+                    } else if (j == 2) {
+                        magazine.setAuthor(magazines.get(i).getAuthor());
+                    } else if (j == 3) {
+                        magazine.setPublishedAt(magazines.get(i).getPublishedAt());
+                    }
+                }
+            }
+        }
+        return magazine;
+    }
+    public List<Magazine> searchByAuthor(List<Magazine> magazines,String author) {
+        List<Magazine> magazineFound = new ArrayList<>();
+        for (int i = 0;i<magazines.size();i++) {
+            List<AuthorEmail> authors = magazines.get(i).getAuthor();
+            String authorTemp = "";
+            for (AuthorEmail temp : authors) {
+                authorTemp = temp.toString();
+                if (authorTemp.equals(author)) {
+                    Magazine magazine = new Magazine();
+                    for (int j = 0; j <= 3; j++) {
+                        if (j == 0) {
+                            magazine.setTitle(magazines.get(i).getTitle());
+                        } else if (j == 1) {
+                            magazine.setIsbn(magazines.get(i).getIsbn());
+                        } else if (j == 2) {
+                            magazine.setAuthor(magazines.get(i).getAuthor());
+                        } else if (j == 3) {
+                            magazine.setPublishedAt(magazines.get(i).getPublishedAt());
+                        }
+                    }
+                    magazineFound.add(magazine);
+                }
+            }
+        }
+        return magazineFound;
+    }
+
+}

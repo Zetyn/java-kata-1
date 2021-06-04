@@ -1,33 +1,10 @@
 package org.echocat.kata.java.part1;
 
-public class Book {
 
-    private String title,isbn,author,description;
-    
-    public String getTitle() {
-        return title;
-    }
+public class Book extends TitleIsbnAuthor{
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    
-    public String getIsbn() {
-        return isbn;
-    }
-    
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+    private String description;
 
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-    
     public String getDescription() {
         return description;
     }
@@ -38,7 +15,14 @@ public class Book {
     
     @Override
     public String toString() {
-        return "\ntitle: " + getTitle() + "\nisbn: " + getIsbn() + "\nautor: " + getAuthor() + "\ndescription: " + getDescription();
+        return "\ntitle: " 
+        + getTitle() 
+        + "\nisbn: " 
+        + getIsbn() 
+        + "\nautor: "
+        + getAuthor()
+        + "\ndescription: " 
+        + getDescription();
     }
 
 }

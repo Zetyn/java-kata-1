@@ -2,30 +2,10 @@ package org.echocat.kata.java.part1;
 
 import java.time.LocalDate;
 
-public class Magazine {
-    private String title;
-    private String isbn;
-    private String author;
-    private LocalDate publishedAt;
+public class Magazine extends TitleIsbnAuthor{
     
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getIsbn() {
-        return isbn;
-    }
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
-    public String getAuthor() {
-        return author;
-    }
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+    private LocalDate publishedAt;
+
     public LocalDate getPublishedAt() {
         return publishedAt;
     }
