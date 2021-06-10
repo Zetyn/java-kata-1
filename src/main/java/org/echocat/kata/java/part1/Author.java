@@ -1,8 +1,14 @@
 package org.echocat.kata.java.part1;
 
-public class Author extends AuthorEmail{
-    String firstName,lastName;
+public class Author {
+    String email,firstName,lastName;
 
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public String getFirstName() {
         return firstName;
     }
@@ -17,11 +23,11 @@ public class Author extends AuthorEmail{
     }
     
     public String toString() {
-        return "\nEmail: " 
-        + getEmail() 
-        + "\nFirstName: " 
-        + getFirstName() 
-        + "\nLastName: " 
+        return "\nEmail: "
+        + getEmail()
+        + "\nFirstName: "
+        + getFirstName()
+        + "\nLastName: "
         + getLastName();
     }
 }
