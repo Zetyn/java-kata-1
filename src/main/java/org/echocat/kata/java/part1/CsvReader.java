@@ -2,8 +2,6 @@ package org.echocat.kata.java.part1;
 
 import java.util.Scanner;
 
-import main.java.org.echocat.kata.java.part1.AuthorEmail;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,11 +16,11 @@ public class CsvReader {
     List<Book> books = new ArrayList<>();
     List<Magazine> magazines = new ArrayList<>();
     List<Author> authors = new ArrayList<>();
-    List<AuthorEmail> emails = new ArrayList<>();
+    List<String> emails = new ArrayList<>();
 
 
     public List<Book> readBooks() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader("Z:/java-kata-1-master/src/main/resources/org/echocat/kata/java/part1/data/books.csv"));
+    BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/books.csv"));
         
     String line = null;
     Scanner scanner = null;
@@ -32,7 +30,6 @@ public class CsvReader {
 
     while ((line = reader.readLine())!= null) {
         Book book = new Book();
-        AuthorEmail email = new AuthorEmail();
         scanner = new Scanner(line);
         scanner.useDelimiter(";");
         if (k == 1) {
@@ -43,11 +40,9 @@ public class CsvReader {
                 } else if (index == 1) {
                     book.setIsbn(data);
                 } else if (index == 2) {
-                    String[] str = data.split(",");
+                    String[] authorsArray = data.split(",");
                     emails = new ArrayList<>();
-                    for (int j = 0;j < str.length;j++) {
-                        email = new AuthorEmail();
-                        email.setEmail(str[j]);
+                    for (String email : authorsArray) {
                         emails.add(email);
                     }
                     book.setAuthor(emails);
@@ -65,7 +60,7 @@ public class CsvReader {
     }
 
     public List<Magazine> readMagazines() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("Z:/java-kata-1-master/src/main/resources/org/echocat/kata/java/part1/data/magazines.csv"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/magazines.csv"));
             
         String line = null;
         Scanner scanner = null;
@@ -75,7 +70,6 @@ public class CsvReader {
 
         while ((line = reader.readLine())!= null) {
             Magazine magazine = new Magazine();
-            AuthorEmail email = new AuthorEmail();
             scanner = new Scanner(line);
             scanner.useDelimiter(";");
             if (k == 1) {
@@ -88,9 +82,7 @@ public class CsvReader {
                         } else if (index == 2) {
                             String[] str = data.split(",");
                             emails = new ArrayList<>();
-                            for (int j = 0;j < str.length;j++) {
-                                email = new AuthorEmail();
-                                email.setEmail(str[j]);
+                            for (String email : str) {
                                 emails.add(email);
                             }
                             magazine.setAuthor(emails);
@@ -110,7 +102,7 @@ public class CsvReader {
         }
 
         public List<Author> readAuthors() throws IOException{
-            BufferedReader reader = new BufferedReader(new FileReader("Z:/java-kata-1-master/src/main/resources/org/echocat/kata/java/part1/data/authors.csv"));
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/authors.csv"));
 
             String line = null;
             Scanner scanner = null;

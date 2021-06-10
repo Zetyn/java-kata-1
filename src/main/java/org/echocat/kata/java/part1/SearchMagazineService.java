@@ -1,9 +1,8 @@
-package main.java.org.echocat.kata.java.part1;
+package org.echocat.kata.java.part1;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.echocat.kata.java.part1.Magazine;
 
 
 public class SearchMagazineService {
@@ -30,9 +29,9 @@ public class SearchMagazineService {
     public List<Magazine> searchByAuthor(List<Magazine> magazines,String author) {
         List<Magazine> magazineFound = new ArrayList<>();
         for (int i = 0;i<magazines.size();i++) {
-            List<AuthorEmail> authors = magazines.get(i).getAuthor();
+            List<String> authors = magazines.get(i).getAuthor();
             String authorTemp = "";
-            for (AuthorEmail temp : authors) {
+            for (String temp : authors) {
                 authorTemp = temp.toString();
                 if (authorTemp.equals(author)) {
                     Magazine magazine = new Magazine();

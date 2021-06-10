@@ -1,7 +1,5 @@
 package org.echocat.kata.java.part1;
 
-import main.java.org.echocat.kata.java.part1.AuthorEmail;
-
 public class Author extends AuthorEmail{
     String firstName,lastName;
 

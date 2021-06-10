@@ -1,4 +1,4 @@
-package main.java.org.echocat.kata.java.part1;
+package org.echocat.kata.java.part1;
 
 import java.util.List;
 

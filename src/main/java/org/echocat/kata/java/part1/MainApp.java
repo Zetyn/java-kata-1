@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
-import main.java.org.echocat.kata.java.part1.ConsolePrinter;
-import main.java.org.echocat.kata.java.part1.SearchBookService;
-import main.java.org.echocat.kata.java.part1.SearchMagazineService;
-
 public class MainApp {
 
     public static void main(String[] args) throws IOException  {

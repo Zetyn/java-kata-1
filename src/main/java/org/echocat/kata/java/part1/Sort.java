@@ -3,7 +3,7 @@ package org.echocat.kata.java.part1;
 import java.util.Comparator;
 import java.util.List;
 
-public class Sort extends TIA{
+public class Sort extends TitleIsbnAuthor{
 
     public void sortBooksByTitle(List<Book> books) {
         Comparator<Book> comparatorBooks = new Comparator<Book>(){
