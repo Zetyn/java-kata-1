@@ -1,6 +1,7 @@
 package org.echocat.kata.java.part1;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +13,11 @@ public class MainApp {
         List<Author> authors = reader.readAuthors();
         List<Book> books = reader.readBooks();
         List<Magazine> magazines = reader.readMagazines();
-        
+        List<TitleIsbnAuthor> booksAndMagazinesSort = new ArrayList<>();
+        booksAndMagazinesSort.addAll(books);
+        booksAndMagazinesSort.addAll(magazines);
+
+
         ConsolePrinter printer = new ConsolePrinter();
 
         printer.print("\nBooks:\n" + books);
@@ -20,10 +25,8 @@ public class MainApp {
         printer.print("\nAuthors:\n" + authors);
 
         Sort sort = new Sort();
-        sort.sortBooksByTitle(books);
-        sort.sortMagazinesByTitle(magazines);
-        printer.print("\nSorted books\n" + books);
-        printer.print("\nSorted magazines\n" + magazines);
+        sort.sortBooksAndMagazinesByTitle(booksAndMagazinesSort);
+        printer.print("\nSorted books and magazines\n" + booksAndMagazinesSort);
 
         SearchBookService searchBookService = new SearchBookService();
         SearchMagazineService searchMagazineService = new SearchMagazineService();
