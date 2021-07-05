@@ -11,6 +11,8 @@ public class SearchMagazineService {
         Magazine magazine = new Magazine();
         for (int i = 0;i < magazines.size();i++) {
             if (magazines.get(i).getIsbn().equals(isbn)) {
+                // що тут ти намагаєшся зробити?
+                // чому не просто return magazine ?
                 for (int j = 0; j <= 3; j++) {
                     if (j == 0) {
                         magazine.setTitle(magazines.get(i).getTitle());
@@ -35,6 +37,8 @@ public class SearchMagazineService {
                 authorTemp = temp.toString();
                 if (authorTemp.equals(author)) {
                     Magazine magazine = new Magazine();
+                    // що тут ти намагаєшся зробити?
+                    // чому не просто return magazine ?
                     for (int j = 0; j <= 3; j++) {
                         if (j == 0) {
                             magazine.setTitle(magazines.get(i).getTitle());
