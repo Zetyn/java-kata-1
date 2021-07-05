@@ -2,7 +2,8 @@ package org.echocat.kata.java.part1;
 
 import java.util.List;
 
-
+// подумай над назвою класу... по всіх канонах ооп така назва не є інформативна.
+// почитай і подумай про абстрактний клас...
 public class TitleIsbnAuthor {
     private String title;
     private String isbn;
