@@ -30,6 +30,9 @@ public class MainApp {
 
         SearchBookService searchBookService = new SearchBookService();
         SearchMagazineService searchMagazineService = new SearchMagazineService();
+        // подумай чи може в тебе бути 1 сервіс наприклад: SearchService
+        // де буде в тебе в 2 методи: searchByIsbn, searchByAuthor які приймають ліст booksAndMagazinesSort 
+        // та відповідно параметр пошуку(isbn or author).
         Scanner in = new Scanner(System.in);
         printer.print("\nEnter isbn to search\n");
         String isbn = in.nextLine();
