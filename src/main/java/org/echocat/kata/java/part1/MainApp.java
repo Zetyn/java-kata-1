@@ -13,7 +13,7 @@ public class MainApp {
         List<Author> authors = reader.readAuthors();
         List<Book> books = reader.readBooks();
         List<Magazine> magazines = reader.readMagazines();
-        List<TitleIsbnAuthor> booksAndMagazinesSort = new ArrayList<>();
+        List<TitleIsbnAuthorModel> booksAndMagazinesSort = new ArrayList<>();
         booksAndMagazinesSort.addAll(books);
         booksAndMagazinesSort.addAll(magazines);
 
@@ -24,30 +24,23 @@ public class MainApp {
         printer.print("\nMagazines:\n" + magazines);
         printer.print("\nAuthors:\n" + authors);
 
-        Sort sort = new Sort();
-        sort.sortBooksAndMagazinesByTitle(booksAndMagazinesSort);
+
+        Sort.sortBooksAndMagazinesByTitle(booksAndMagazinesSort);
         printer.print("\nSorted books and magazines\n" + booksAndMagazinesSort);
 
-        SearchBookService searchBookService = new SearchBookService();
-        SearchMagazineService searchMagazineService = new SearchMagazineService();
+        SearchService searchBookService = new SearchService();
         Scanner in = new Scanner(System.in);
         printer.print("\nEnter isbn to search\n");
         String isbn = in.nextLine();
         printer.print("\nEnter the author to search\n");
         String author = in.nextLine();
 
-        Book bookByIsbnResults = searchBookService.searchByIsbn(books,isbn);
-        printer.print("\nFound book by isbn\n" + bookByIsbnResults);
+        List<TitleIsbnAuthorModel> bookByIsbnResults = searchBookService.searchByIsbn(booksAndMagazinesSort,isbn);
+        printer.print("\nFound by isbn\n"+ bookByIsbnResults);
 
-        Magazine magazineByIsbnResults = searchMagazineService.searchByIsbn(magazines,isbn);
-        printer.print("\nFound magazine by isbn\n" + magazineByIsbnResults);
+        List<TitleIsbnAuthorModel> bookByAuthorResults = searchBookService.searchByAuthor(booksAndMagazinesSort,author);
+        printer.print("\nFound by author\n" + bookByAuthorResults);
 
-
-        List<Book> bookByAuthorResults = searchBookService.searchByAuthor(books,author);
-        printer.print("\nFound book by author\n" + bookByAuthorResults);
-
-        List<Magazine> magazineByAuthorResults = searchMagazineService.searchByAuthor(magazines,author);
-        printer.print("\nFound magazine by author\n" + magazineByAuthorResults);
         in.close();
 
     }

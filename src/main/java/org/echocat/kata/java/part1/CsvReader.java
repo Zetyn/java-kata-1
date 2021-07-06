@@ -22,8 +22,8 @@ public class CsvReader {
     public List<Book> readBooks() throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/books.csv"));
         
-    String line = null;
-    Scanner scanner = null;
+    String line;
+    Scanner scanner;
     int index = 0;
     int k = 0;
     
@@ -62,8 +62,8 @@ public class CsvReader {
     public List<Magazine> readMagazines() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/magazines.csv"));
             
-        String line = null;
-        Scanner scanner = null;
+        String line;
+        Scanner scanner;
         int index = 0;
         int k = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d.MM.yyyy");
@@ -104,8 +104,8 @@ public class CsvReader {
         public List<Author> readAuthors() throws IOException{
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/authors.csv"));
 
-            String line = null;
-            Scanner scanner = null;
+            String line;
+            Scanner scanner;
             int index = 0;
             int k = 0;
 

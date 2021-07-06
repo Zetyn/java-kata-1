@@ -2,7 +2,7 @@ package org.echocat.kata.java.part1;
 
 import java.time.LocalDate;
 
-public class Magazine extends TitleIsbnAuthor{
+public class Magazine extends TitleIsbnAuthorModel{
     
     private LocalDate publishedAt;
 

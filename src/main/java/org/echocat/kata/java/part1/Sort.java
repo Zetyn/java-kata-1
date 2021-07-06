@@ -3,10 +3,10 @@ package org.echocat.kata.java.part1;
 import java.util.Comparator;
 import java.util.List;
 
-public class Sort extends TitleIsbnAuthor{
+public final class Sort{
 
-    public void sortBooksAndMagazinesByTitle(List<TitleIsbnAuthor> list) {
-        Comparator<TitleIsbnAuthor> comparator = Comparator.comparing(TitleIsbnAuthor::getTitle);
+    public static void sortBooksAndMagazinesByTitle(List<TitleIsbnAuthorModel> list) {
+        Comparator<TitleIsbnAuthorModel> comparator = Comparator.comparing(TitleIsbnAuthorModel::getTitle);
         list.sort(comparator);
     }
 }

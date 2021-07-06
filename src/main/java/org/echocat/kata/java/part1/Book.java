@@ -1,7 +1,7 @@
 package org.echocat.kata.java.part1;
 
 
-public class Book extends TitleIsbnAuthor{
+public class Book extends TitleIsbnAuthorModel{
 
     private String description;
 

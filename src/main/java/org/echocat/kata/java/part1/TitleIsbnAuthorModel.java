@@ -3,7 +3,7 @@ package org.echocat.kata.java.part1;
 import java.util.List;
 
 
-public class TitleIsbnAuthor {
+public abstract class TitleIsbnAuthorModel {
     private String title;
     private String isbn;
     private List<String> author;
