@@ -6,6 +6,7 @@ import java.util.List;
 
 public class SearchService {
 
+    // isbn це унікальний ідентифікатор, тобто цей метод має повертати не ліст а 1 обєкт TitleIsbnAuthorModel
     public List<TitleIsbnAuthorModel> searchByIsbn(List<TitleIsbnAuthorModel> booksAndMagazines, String isbn) {
         List<TitleIsbnAuthorModel> booksAndMagazinesFound = new ArrayList<>();
 
