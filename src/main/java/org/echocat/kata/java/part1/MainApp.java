@@ -16,17 +16,12 @@ public class MainApp {
         List<TitleIsbnAuthorModel> booksAndMagazinesSort = new ArrayList<>();
         booksAndMagazinesSort.addAll(books);
         booksAndMagazinesSort.addAll(magazines);
-
+        Sort.sortBooksAndMagazinesByTitle(booksAndMagazinesSort);
 
         ConsolePrinter printer = new ConsolePrinter();
 
-        printer.print("\nBooks:\n" + books);
-        printer.print("\nMagazines:\n" + magazines);
-        printer.print("\nAuthors:\n" + authors);
-
-
-        Sort.sortBooksAndMagazinesByTitle(booksAndMagazinesSort);
         printer.print("\nSorted books and magazines\n" + booksAndMagazinesSort);
+        printer.print("\nAuthors:\n" + authors);
 
         SearchService searchBookService = new SearchService();
         Scanner in = new Scanner(System.in);
@@ -35,7 +30,7 @@ public class MainApp {
         printer.print("\nEnter the author to search\n");
         String author = in.nextLine();
 
-        List<TitleIsbnAuthorModel> bookByIsbnResults = searchBookService.searchByIsbn(booksAndMagazinesSort,isbn);
+        TitleIsbnAuthorModel bookByIsbnResults = searchBookService.searchByIsbn(booksAndMagazinesSort,isbn);
         printer.print("\nFound by isbn\n"+ bookByIsbnResults);
 
         List<TitleIsbnAuthorModel> bookByAuthorResults = searchBookService.searchByAuthor(booksAndMagazinesSort,author);

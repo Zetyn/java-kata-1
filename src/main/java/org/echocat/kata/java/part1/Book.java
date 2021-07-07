@@ -15,13 +15,13 @@ public class Book extends TitleIsbnAuthorModel{
     
     @Override
     public String toString() {
-        return "\ntitle: " 
-        + getTitle() 
-        + "\nisbn: " 
-        + getIsbn() 
-        + "\nautor: "
+        return "\ntitle: "
+        + getTitle()
+        + "\nisbn: "
+        + getIsbn()
+        + "\nauthor: "
         + getAuthor()
-        + "\ndescription: " 
+        + "\ndescription: "
         + getDescription();
     }
 

@@ -6,15 +6,15 @@ import java.util.List;
 
 public class SearchService {
 
-    public List<TitleIsbnAuthorModel> searchByIsbn(List<TitleIsbnAuthorModel> booksAndMagazines, String isbn) {
-        List<TitleIsbnAuthorModel> booksAndMagazinesFound = new ArrayList<>();
+    public TitleIsbnAuthorModel searchByIsbn(List<TitleIsbnAuthorModel> booksAndMagazines, String isbn) {
+        TitleIsbnAuthorModel titleIsbnAuthorModel = new TitleIsbnAuthorModel() {};
 
         for (TitleIsbnAuthorModel value : booksAndMagazines) {
             if (value.getIsbn().equals(isbn)) {
-                booksAndMagazinesFound.add(value);
+                titleIsbnAuthorModel = value;
             }
         }
-        return booksAndMagazinesFound;
+        return titleIsbnAuthorModel;
     }
 
     public List<TitleIsbnAuthorModel> searchByAuthor(List<TitleIsbnAuthorModel> booksAndMagazines,String author) {
