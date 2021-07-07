@@ -19,9 +19,7 @@ public class MainApp {
 
 
         ConsolePrinter printer = new ConsolePrinter();
-
-        printer.print("\nBooks:\n" + books);
-        printer.print("\nMagazines:\n" + magazines);
+        printer.print("\nBooks and Magazines:\n" + booksAndMagazinesSort);
         printer.print("\nAuthors:\n" + authors);
 
 
