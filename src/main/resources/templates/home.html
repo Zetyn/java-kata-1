@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://thymeleaf.org" >
+    <head>
+        <meta charset="UTF-8">
+        <title>test</title>
+    </head>
+    <body>
+        <table border="1">
+            <tr th:each="Book:${books}">
+                <td th:text="${Book.getTitle()}">title</td>
+                <td th:text="${Book.getIsbn()}">isbn</td>
+                <td th:text="${Book.getAuthor()}">author</td>
+                <td th:text="${Book.getDescription()}">description</td>
+            </tr>
+        </table>
+    </body>
+</html>

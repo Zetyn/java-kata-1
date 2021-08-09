@@ -37,7 +37,7 @@
             <version>5.6.2</version>
             <scope>test</scope>
         </dependency>
-
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -48,7 +48,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>2.4.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
     <build>

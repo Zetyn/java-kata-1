@@ -1,5 +1,11 @@
 package org.echocat.kata.java.part1;
 
+import org.echocat.kata.java.part1.models.Author;
+import org.echocat.kata.java.part1.models.Book;
+import org.echocat.kata.java.part1.models.Magazine;
+import org.echocat.kata.java.part1.models.TitleIsbnAuthorModel;
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,14 +14,34 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class CsvReader {
 
     List<Book> books = new ArrayList<>();
     List<Magazine> magazines = new ArrayList<>();
     List<Author> authors = new ArrayList<>();
     List<String> emails = new ArrayList<>();
+    List <TitleIsbnAuthorModel> booksAndMagazinesSort = new ArrayList<>();
 
+    public List<Author> readAuthors() throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/authors.csv"));
+
+        String line;
+        int k = 0;
+
+        while((line = reader.readLine())!=null) {
+            Author author = new Author();
+            String[] strings = line.split(";");
+            if (k == 1) {
+                author.setEmail(strings[0]);
+                author.setFirstName(strings[1]);
+                author.setLastName(strings[2]);
+                authors.add(author);
+            } else {k = 1;}
+        }
+        reader.close();
+        return authors;
+    }
 
     public List<Book> readBooks() throws IOException {
     BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/books.csv"));
@@ -72,24 +98,16 @@ public class CsvReader {
         return magazines;
         }
 
-        public List<Author> readAuthors() throws IOException{
-            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/org/echocat/kata/java/part1/data/authors.csv"));
+    public List<Book> index() throws IOException {
+        List<Book> books = readBooks();
+        /*
+        List<Magazine> magazines = readMagazines();
+        booksAndMagazinesSort.addAll(books);
+        booksAndMagazinesSort.addAll(magazines);
+        Sort.sortBooksAndMagazinesByTitle(booksAndMagazinesSort);
 
-            String line;
-            int k = 0;
-
-            while((line = reader.readLine())!=null) {
-                Author author = new Author();
-                String[] strings = line.split(";");
-                if (k == 1) {
-                    author.setEmail(strings[0]);
-                    author.setFirstName(strings[1]);
-                    author.setLastName(strings[2]);
-                    authors.add(author);
-                } else {k = 1;}
-            }
-            reader.close();
-            return authors;
-        }
+         */
+        return books;
+    }
 }
 

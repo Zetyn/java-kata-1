@@ -1,27 +1,49 @@
 package org.echocat.kata.java.part1;
 
+import org.echocat.kata.java.part1.models.Author;
+import org.echocat.kata.java.part1.models.Book;
+import org.echocat.kata.java.part1.models.Magazine;
+import org.echocat.kata.java.part1.models.TitleIsbnAuthorModel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 @SpringBootApplication
-@RestController
+@Controller
 @EnableAutoConfiguration
+@RequestMapping("/home")
 public class MainApp {
 
     public static void main(String[] args) {
         SpringApplication.run(MainApp.class,args);
     }
 
-    @RequestMapping("/")
+    private final CsvReader csvReader;
+
+    @Autowired
+    public MainApp(CsvReader csvReader) {
+        this.csvReader = csvReader;
+    }
+
+    @GetMapping()
+    public String home(Model model) throws IOException {
+        model.addAttribute("Book",csvReader.index());
+        return "home";
+    }
+
+/*
+    @GetMapping("/print")
     public void consolePrint() throws IOException {
+
         CsvReader reader = new CsvReader();
 
         List<Author> authors = reader.readAuthors();
@@ -51,6 +73,7 @@ public class MainApp {
         printer.print("\nFound by author\n" + bookByAuthorResults);
 
         in.close();
-    }
 
+    }
+*/
 }

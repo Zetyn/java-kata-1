@@ -1,5 +1,7 @@
 package org.echocat.kata.java.part1;
 
+import org.echocat.kata.java.part1.models.TitleIsbnAuthorModel;
+
 import java.util.Comparator;
 import java.util.List;
 

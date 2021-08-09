@@ -1,4 +1,6 @@
-package org.echocat.kata.java.part1;
+package org.echocat.kata.java.part1.Service;
+
+import org.echocat.kata.java.part1.models.TitleIsbnAuthorModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,7 @@ public class SearchService {
 
     public TitleIsbnAuthorModel searchByIsbn(List<TitleIsbnAuthorModel> booksAndMagazines, String isbn) {
         TitleIsbnAuthorModel titleIsbnAuthorModel = new TitleIsbnAuthorModel() {};
-
+        
         for (TitleIsbnAuthorModel value : booksAndMagazines) {
             if (value.getIsbn().equals(isbn)) {
                 titleIsbnAuthorModel = value;
