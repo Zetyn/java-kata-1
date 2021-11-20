@@ -115,7 +115,7 @@ You have to implement an abstracted and simple library system.
    then on _Run_ or _Debug_.
 2. By command line:
    ```bash
-   ./mvnw package exec:java -Dexec.mainClass=org.echocat.kata.java.part1.MainApp
+   ./mvnw package exec:java -Dexec.mainClass=org.echocat.kata.java.part1.controllers.MainApp
    ```
 ##### How to run your tests?
 
