@@ -2,10 +2,14 @@ package org.echocat.kata.java.part1.service.impl;
 
 import org.echocat.kata.java.part1.models.*;
 import org.echocat.kata.java.part1.repository.AuthorRepository;
+import org.echocat.kata.java.part1.repository.BookRepository;
 import org.echocat.kata.java.part1.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -16,20 +20,9 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //---------------------Update------------------------------
     @Override
-    public Author addBookForAuthor(Author author,Book book) {
-        author.getBooks().add(book);
-        return author;
-    }
-
-    @Override
-    public Author addMagazineForAuthor(Author author,Magazine magazine) {
-        author.getMagazines().add(magazine);
-        return author;
-    }
-
-    @Override
-    public Author update(Author author,Long id) {
+    public Author update(Author author, Long id) {
         Author updateAuthor = authorRepository.findById(id);
         updateAuthor.setFirstName(author.getFirstName());
         updateAuthor.setLastName(author.getLastName());
@@ -38,6 +31,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(updateAuthor);
     }
 
+    //---------------------Save------------------------------
     @Override
     public Author save(Author author) {
         Author newAuthor = new Author();
@@ -51,6 +45,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(newAuthor);
     }
 
+    //---------------------Find------------------------------
     @Override
     public Iterable<Author> findAll() {
         return authorRepository.findAll();
@@ -66,11 +61,13 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findByEmail(email);
     }
 
+    //---------------------Exists------------------------------
     @Override
     public boolean existsById(Long id) {
         return authorRepository.existsById(id);
     }
 
+    //---------------------Delete------------------------------
     @Override
     public void deleteById(Long id) {
         authorRepository.deleteById(id);

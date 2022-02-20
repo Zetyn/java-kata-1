@@ -2,6 +2,7 @@ package org.echocat.kata.java.part1.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,6 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 
 @Configuration
@@ -29,16 +33,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //Enable CORS and disable CSRF
         http
+                .cors().and()
                 .csrf().disable();
-                /*.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());*/
-
+        //Set session management to stateless
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and();
+        //Set permissions on endpoints
+        http
                 .authorizeRequests()
-                    .antMatchers("/","/library","/library/authors","/library/magazines","/library/login/signUp","/library/login/signIn").permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers(HttpMethod.GET, "/", "/library").permitAll()
+                .antMatchers("/library/login/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/library/authors").permitAll()
+                .antMatchers(HttpMethod.GET, "/library/books/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/library/magazines").permitAll()
+
+                .antMatchers(HttpMethod.POST, "/library/books/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/library/magazines/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/library/books/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/library/magazines/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/library/books/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/library/magazines/**").permitAll()
+
+                .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfig);
     }
@@ -47,6 +67,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOriginPattern("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", config);
+        return new CorsFilter(source);
     }
 
 }

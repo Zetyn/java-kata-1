@@ -6,6 +6,7 @@ import org.echocat.kata.java.part1.repository.AuthorRepository;
 import org.echocat.kata.java.part1.security.JwtAuthenticationException;
 import org.echocat.kata.java.part1.security.JwtTokenProvider;
 import org.echocat.kata.java.part1.service.AuthorService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,28 +20,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/library/login")
+@RequestMapping("/library")
 public class RegistrationController {
 
     private final AuthorRepository authorRepository;
-
 
     private final AuthorService authorService;
 
     private final AuthenticationManager authenticationManager;
 
-
     private final JwtTokenProvider jwtTokenProvider;
-
+    //---------------------Constructor------------------------------
     public RegistrationController(AuthorRepository authorRepository, AuthorService authorService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
         this.authorRepository = authorRepository;
         this.authorService = authorService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
-
-    @PostMapping("/signIn")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request) {
+    //---------------------Sign in------------------------------
+    @PostMapping("/login/signIn")
+    public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request, HttpServletResponse resp) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
             Author user = authorRepository.findByEmail(request.getEmail());
@@ -48,20 +47,24 @@ public class RegistrationController {
             Map<Object, Object> response = new HashMap<>();
             response.put("email", request.getEmail());
             response.put("token", token);
+            response.put("firstName", user.getFirstName());
+            response.put("lastName", user.getLastName());
+            response.put("id", user.getId());
+            response.put("role", user.getRole());
+
             return ResponseEntity.ok(response);
         } catch (JwtAuthenticationException e) {
             return new ResponseEntity<>("Invalid email/password", HttpStatus.FORBIDDEN);
         }
     }
-
-
-    @PostMapping("/logout")
+    //---------------------Logout------------------------------
+    @PostMapping()
     public void logout(HttpServletRequest request, HttpServletResponse response) {
         SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
         securityContextLogoutHandler.logout(request, response, null);
     }
-
-    @PostMapping("/signUp")
+    //---------------------Create user------------------------------
+    @PostMapping("/login/signUp")
     public ResponseEntity<?> createUser(@RequestBody Author user) {
         Author newUser = authorRepository.findByEmail(user.getEmail());
         if (newUser == null) {

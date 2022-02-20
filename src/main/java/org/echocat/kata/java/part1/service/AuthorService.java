@@ -5,7 +5,7 @@ import org.echocat.kata.java.part1.models.Book;
 import org.echocat.kata.java.part1.models.Magazine;
 
 public interface AuthorService {
-    Author update(Author author,Long id);
+    Author update(Author author, Long id);
 
     Author save(Author author);
 
@@ -14,10 +14,6 @@ public interface AuthorService {
     Author findById(Long id);
 
     Author findByEmail(String email);
-
-    Author addBookForAuthor(Author author, Book book);
-
-    Author addMagazineForAuthor(Author author, Magazine magazine);
 
     boolean existsById(Long id);
 

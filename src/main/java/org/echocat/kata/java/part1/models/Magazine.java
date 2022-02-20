@@ -29,7 +29,7 @@ public class Magazine {
             inverseJoinColumns = @JoinColumn(name = "id_author")
     )
     private Set<Author> authors = new HashSet<>();
-    @JsonFormat(pattern = "d.MM.yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate publishedAt;
 
     @Override

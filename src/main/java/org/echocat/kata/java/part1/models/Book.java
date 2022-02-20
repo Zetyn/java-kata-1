@@ -12,20 +12,20 @@ import java.util.Set;
 @Table(name = "books")
 @Getter
 @Setter
+
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
     private String isbn;
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "books_authors",
             joinColumns = @JoinColumn(name = "id_book"),
             inverseJoinColumns = @JoinColumn(name = "id_author")
     )
     private Set<Author> authors = new HashSet<>();
     private String description;
-
 
     @Override
     public String toString() {
