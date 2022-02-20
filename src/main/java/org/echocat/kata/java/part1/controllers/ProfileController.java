@@ -26,6 +26,7 @@ public class ProfileController {
         authorService.update(author, author.getId());
         return ResponseEntity.ok(author);
     }
+
 /*
     @PostMapping("/profile")
     public Book myBooks(@RequestBody Author author) {
