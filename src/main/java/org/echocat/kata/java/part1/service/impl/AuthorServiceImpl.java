@@ -1,76 +1,73 @@
 package org.echocat.kata.java.part1.service.impl;
 
 import org.echocat.kata.java.part1.models.*;
-import org.echocat.kata.java.part1.repository.AuthorRepository;
+import org.echocat.kata.java.part1.repository.UserRepository;
 import org.echocat.kata.java.part1.repository.BookRepository;
-import org.echocat.kata.java.part1.service.AuthorService;
+import org.echocat.kata.java.part1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 @Service
-public class AuthorServiceImpl implements AuthorService {
+public class AuthorServiceImpl implements UserService {
 
     @Autowired
-    private AuthorRepository authorRepository;
+    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     //---------------------Update------------------------------
     @Override
-    public Author update(Author author, Long id) {
-        Author updateAuthor = authorRepository.findById(id);
-        updateAuthor.setFirstName(author.getFirstName());
-        updateAuthor.setLastName(author.getLastName());
-        updateAuthor.setEmail(author.getEmail());
-        updateAuthor.setPassword(passwordEncoder.encode(author.getPassword()));
-        return authorRepository.save(updateAuthor);
+    public User update(User user, Long id) {
+        User updateAuthor = userRepository.findById(id);
+        updateAuthor.setFirstName(user.getFirstName());
+        updateAuthor.setLastName(user.getLastName());
+        updateAuthor.setEmail(user.getEmail());
+        updateAuthor.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(updateAuthor);
     }
 
     //---------------------Save------------------------------
     @Override
-    public Author save(Author author) {
-        Author newAuthor = new Author();
-        newAuthor.setId(author.getId());
-        newAuthor.setFirstName(author.getFirstName());
-        newAuthor.setLastName(author.getLastName());
-        newAuthor.setEmail(author.getEmail());
-        newAuthor.setPassword(passwordEncoder.encode(author.getPassword()));
-        newAuthor.setRole(Role.USER);
-        newAuthor.setStatus(Status.ACTIVE);
-        return authorRepository.save(newAuthor);
+    public User save(User user) {
+        User newUser = new User();
+        newUser.setId(user.getId());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        newUser.setEmail(user.getEmail());
+        newUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        newUser.setRole(Role.USER);
+        newUser.setStatus(Status.ACTIVE);
+        return userRepository.save(newUser);
     }
 
     //---------------------Find------------------------------
     @Override
-    public Iterable<Author> findAll() {
-        return authorRepository.findAll();
+    public Iterable<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override
-    public Author findById(Long id) {
-        return authorRepository.findById(id);
+    public User findById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public Author findByEmail(String email) {
-        return authorRepository.findByEmail(email);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     //---------------------Exists------------------------------
     @Override
     public boolean existsById(Long id) {
-        return authorRepository.existsById(id);
+        return userRepository.existsById(id);
     }
 
     //---------------------Delete------------------------------
     @Override
     public void deleteById(Long id) {
-        authorRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
 }

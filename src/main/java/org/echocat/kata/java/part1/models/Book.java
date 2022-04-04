@@ -19,11 +19,11 @@ public class Book {
     private String title;
     private String isbn;
     @ManyToMany()
-    @JoinTable(name = "books_authors",
+    @JoinTable(name = "books_users",
             joinColumns = @JoinColumn(name = "id_book"),
-            inverseJoinColumns = @JoinColumn(name = "id_author")
+            inverseJoinColumns = @JoinColumn(name = "id_user")
     )
-    private Set<Author> authors = new HashSet<>();
+    private Set<User> users = new HashSet<>();
     private String description;
     @OneToMany(mappedBy = "id")
     private List<Image> images;
@@ -40,7 +40,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
+                ", users=" + users +
                 ", description='" + description + '\'' +
                 ", images=" + images +
                 '}';

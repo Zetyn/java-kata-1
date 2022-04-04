@@ -24,11 +24,11 @@ public class Magazine {
 
     @ManyToMany()
     @JoinTable(
-            name = "magazines_authors",
+            name = "magazines_users",
             joinColumns = @JoinColumn(name = "id_magazine"),
-            inverseJoinColumns = @JoinColumn(name = "id_author")
+            inverseJoinColumns = @JoinColumn(name = "id_user")
     )
-    private Set<Author> authors = new HashSet<>();
+    private Set<User> users = new HashSet<>();
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate publishedAt;
 
@@ -38,8 +38,8 @@ public class Magazine {
                 + getTitle()
                 + "\nisbn: "
                 + getIsbn()
-                + "\nautor: "
-                + getAuthors()
+                + "\nuser: "
+                + getUsers()
                 + "\npublishedAt: "
                 + getPublishedAt();
     }

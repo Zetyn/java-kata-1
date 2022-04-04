@@ -1,7 +1,6 @@
 package org.echocat.kata.java.part1.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,26 +9,26 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "authors")
+@Table(name = "users")
 @Getter
 @Setter
-public class Author {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToMany()
     @JoinTable(
-            name = "books_authors",
-            joinColumns = @JoinColumn(name = "id_author"),
+            name = "books_users",
+            joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_book")
     )
     @JsonIgnore
     private Set<Book> books = new HashSet<>();
     @ManyToMany()
     @JoinTable(
-            name = "magazines_authors",
-            joinColumns = @JoinColumn(name = "id_author"),
+            name = "magazines_users",
+            joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_magazine")
     )
     @JsonIgnore

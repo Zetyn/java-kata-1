@@ -1,7 +1,7 @@
 package org.echocat.kata.java.part1.security;
 
 import lombok.Data;
-import org.echocat.kata.java.part1.models.Author;
+import org.echocat.kata.java.part1.models.User;
 import org.echocat.kata.java.part1.models.Status;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,14 +11,14 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-public class User implements UserDetails {
+public class UserD implements UserDetails {
 
     private final String username;
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
 
-    public User(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
+    public UserD(String username, String password, List<SimpleGrantedAuthority> authorities, boolean isActive) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -60,7 +60,7 @@ public class User implements UserDetails {
         return isActive;
     }
 
-    public static UserDetails fromUser(Author user) {
+    public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(), user.getPassword(),
                 user.getStatus().equals(Status.ACTIVE),

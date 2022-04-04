@@ -1,11 +1,11 @@
 package org.echocat.kata.java.part1.controllers;
 
 import org.echocat.kata.java.part1.models.AuthenticationRequestDTO;
-import org.echocat.kata.java.part1.models.Author;
-import org.echocat.kata.java.part1.repository.AuthorRepository;
+import org.echocat.kata.java.part1.models.User;
+import org.echocat.kata.java.part1.repository.UserRepository;
 import org.echocat.kata.java.part1.security.JwtAuthenticationException;
 import org.echocat.kata.java.part1.security.JwtTokenProvider;
-import org.echocat.kata.java.part1.service.AuthorService;
+import org.echocat.kata.java.part1.service.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +23,17 @@ import java.util.Map;
 @RequestMapping("/library")
 public class RegistrationController {
 
-    private final AuthorRepository authorRepository;
+    private final UserRepository userRepository;
 
-    private final AuthorService authorService;
+    private final UserService userService;
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenProvider jwtTokenProvider;
     //---------------------Constructor------------------------------
-    public RegistrationController(AuthorRepository authorRepository, AuthorService authorService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
-        this.authorRepository = authorRepository;
-        this.authorService = authorService;
+    public RegistrationController(UserRepository userRepository, UserService userService, AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider) {
+        this.userRepository = userRepository;
+        this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
     }
@@ -42,7 +42,7 @@ public class RegistrationController {
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequestDTO request, HttpServletResponse resp) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-            Author user = authorRepository.findByEmail(request.getEmail());
+            User user = userRepository.findByEmail(request.getEmail());
             String token = jwtTokenProvider.createToken(request.getEmail(), user.getRole().name());
             Map<Object, Object> response = new HashMap<>();
             response.put("email", request.getEmail());
@@ -65,10 +65,10 @@ public class RegistrationController {
     }
     //---------------------Create user------------------------------
     @PostMapping("/login/signUp")
-    public ResponseEntity<?> createUser(@RequestBody Author user) {
-        Author newUser = authorRepository.findByEmail(user.getEmail());
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        User newUser = userRepository.findByEmail(user.getEmail());
         if (newUser == null) {
-            return new ResponseEntity<>(authorService.save(user), HttpStatus.CREATED);
+            return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.FOUND);
     }

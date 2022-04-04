@@ -1,12 +1,10 @@
 package org.echocat.kata.java.part1.service;
 
-import org.echocat.kata.java.part1.models.Author;
 import org.echocat.kata.java.part1.models.Book;
 import org.echocat.kata.java.part1.models.Genre;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Set;
 
 @Service

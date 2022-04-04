@@ -1,10 +1,10 @@
 package org.echocat.kata.java.part1.service.impl;
 
-import org.echocat.kata.java.part1.models.Author;
+import org.echocat.kata.java.part1.models.User;
 import org.echocat.kata.java.part1.models.Book;
 import org.echocat.kata.java.part1.models.Genre;
 import org.echocat.kata.java.part1.repository.BookRepository;
-import org.echocat.kata.java.part1.service.AuthorService;
+import org.echocat.kata.java.part1.service.UserService;
 import org.echocat.kata.java.part1.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,8 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,7 +23,7 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Autowired
-    private AuthorService authorService;
+    private UserService userService;
 
     @Override
     public Page<Book> getBookPagination(int page, int size) {
@@ -72,7 +70,7 @@ public class BookServiceImpl implements BookService {
         Book updateBook = bookRepository.findById(id);
         updateBook.setTitle(book.getTitle());
         updateBook.setIsbn(book.getIsbn());
-        updateBook.getAuthors().addAll(book.getAuthors());
+        updateBook.getUsers().addAll(book.getUsers());
         updateBook.setDescription(book.getDescription());
         return bookRepository.save(updateBook);
     }
@@ -84,12 +82,12 @@ public class BookServiceImpl implements BookService {
         newBook.setTitle(book.getTitle());
         newBook.setIsbn(book.getIsbn());
         newBook.setDescription(book.getDescription());
-        newBook.getAuthors()
+        newBook.getUsers()
                 .addAll(book
-                        .getAuthors()
+                        .getUsers()
                         .stream()
                         .map(a -> {
-                            Author aa = authorService.findByEmail(a.getEmail());
+                            User aa = userService.findByEmail(a.getEmail());
                             aa.getBooks().add(newBook);
                             return aa;
                         }).collect(Collectors.toSet()));

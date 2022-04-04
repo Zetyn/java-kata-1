@@ -1,9 +1,9 @@
 package org.echocat.kata.java.part1.service.impl;
 
-import org.echocat.kata.java.part1.models.Author;
+import org.echocat.kata.java.part1.models.User;
 import org.echocat.kata.java.part1.models.Magazine;
 import org.echocat.kata.java.part1.repository.MagazineRepository;
-import org.echocat.kata.java.part1.service.AuthorService;
+import org.echocat.kata.java.part1.service.UserService;
 import org.echocat.kata.java.part1.service.MagazineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ public class MagazineServiceImpl implements MagazineService {
     private MagazineRepository magazineRepository;
 
     @Autowired
-    private AuthorService authorService;
+    private UserService userService;
 
     @Override
     public Page<Magazine> getMagazinePagination(int page, int size) {
@@ -45,7 +45,7 @@ public class MagazineServiceImpl implements MagazineService {
         Magazine updateMagazine = magazineRepository.findById(id);
         updateMagazine.setTitle(magazine.getTitle());
         updateMagazine.setIsbn(magazine.getIsbn());
-        updateMagazine.getAuthors().addAll(magazine.getAuthors());
+        updateMagazine.getUsers().addAll(magazine.getUsers());
         updateMagazine.setPublishedAt(magazine.getPublishedAt());
         return magazineRepository.save(updateMagazine);
     }
@@ -57,14 +57,14 @@ public class MagazineServiceImpl implements MagazineService {
         newMagazine.setTitle(magazine.getTitle());
         newMagazine.setIsbn(magazine.getIsbn());
         newMagazine.setPublishedAt(magazine.getPublishedAt());
-        newMagazine.getAuthors()
+        newMagazine.getUsers()
                 .addAll(
-                        magazine.getAuthors()
+                        magazine.getUsers()
                                 .stream()
-                                .map(author -> {
-                                    Author author1 = authorService.findByEmail(author.getEmail());
-                                    author1.getMagazines().add(newMagazine);
-                                    return author1;
+                                .map(user -> {
+                                    User user1 = userService.findByEmail(user.getEmail());
+                                    user1.getMagazines().add(newMagazine);
+                                    return user1;
                                 }).collect(Collectors.toSet())
                 );
         return magazineRepository.save(newMagazine);
