@@ -2,6 +2,7 @@ package org.echocat.kata.java.part1.service.impl;
 
 import org.echocat.kata.java.part1.models.Author;
 import org.echocat.kata.java.part1.models.Book;
+import org.echocat.kata.java.part1.models.Genre;
 import org.echocat.kata.java.part1.repository.BookRepository;
 import org.echocat.kata.java.part1.service.AuthorService;
 import org.echocat.kata.java.part1.service.BookService;
@@ -39,13 +40,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Set<Book> findByGenres(Set<Genre> genres) {
+        for (Genre genre: genres) {
+            return bookRepository.findByGenres(genre);
+        }
+        return null;
+//        return bookRepository.findByGenres(genre);
+    }
+
+    @Override
     public Book findById(Long id) {
         return bookRepository.findById(id);
     }
 
     @Override
-    public List<Book> findByTitle(String title) {
+    public Iterable<Book> findByTitle(String title) {
         return bookRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    @Override
+    public Iterable<Book> findByGenresAndTitle(Set<Genre> genres, String title) {
+        for (Genre genre: genres) {
+            return bookRepository.findByGenresAndTitleContainingIgnoreCase(genre,title);
+        }
+        return null;
     }
 
     //-------------------Update------------------------------
