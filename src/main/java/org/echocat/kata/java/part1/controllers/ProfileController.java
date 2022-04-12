@@ -1,14 +1,12 @@
 package org.echocat.kata.java.part1.controllers;
 
+import org.echocat.kata.java.part1.models.Bookmark;
 import org.echocat.kata.java.part1.models.User;
-import org.echocat.kata.java.part1.models.Book;
+import org.echocat.kata.java.part1.service.BookmarkService;
 import org.echocat.kata.java.part1.service.UserService;
-import org.echocat.kata.java.part1.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,7 +17,12 @@ public class ProfileController {
     private UserService userService;
 
     @Autowired
-    private BookService bookService;
+    private BookmarkService bookmarkService;
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<Iterable<Bookmark>> getBookmarks(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(bookmarkService.findByUserId(id),HttpStatus.OK);
+    }
 
     @PutMapping("/profile")
     public ResponseEntity<?> editUser(@RequestBody User user) {
@@ -27,11 +30,4 @@ public class ProfileController {
         return ResponseEntity.ok(user);
     }
 
-/*
-    @PostMapping("/profile")
-    public Book myBooks(@RequestBody Author author) {
-        return bookService.findByAuthors(author.getEmail());
-    }
-
- */
 }

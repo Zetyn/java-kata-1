@@ -6,6 +6,7 @@ import org.echocat.kata.java.part1.models.Genre;
 import org.echocat.kata.java.part1.repository.BookRepository;
 import org.echocat.kata.java.part1.service.UserService;
 import org.echocat.kata.java.part1.service.BookService;
+import org.hibernate.engine.jdbc.LobCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +29,7 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private UserService userService;
+
 
     @Override
     public Page<Book> getBookPagination(int page, int size) {

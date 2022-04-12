@@ -1,5 +1,6 @@
 package org.echocat.kata.java.part1.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.echocat.kata.java.part1.models.User;
 import org.echocat.kata.java.part1.models.Status;
@@ -14,6 +15,7 @@ import java.util.List;
 public class UserD implements UserDetails {
 
     private final String username;
+    @JsonIgnore
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;
     private final boolean isActive;
@@ -62,12 +64,12 @@ public class UserD implements UserDetails {
 
     public static UserDetails fromUser(User user) {
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(),
+                user.getEmail(),
+                user.getPassword(),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),
                 user.getStatus().equals(Status.ACTIVE),
-                user.getRole().getAuthorities()
-        );
+                user.getRole().getAuthorities());
     }
 }

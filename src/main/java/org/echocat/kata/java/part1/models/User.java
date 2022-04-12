@@ -3,6 +3,7 @@ package org.echocat.kata.java.part1.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,8 +13,8 @@ import java.util.Set;
 @Table(name = "users")
 @Getter
 @Setter
+@ToString
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,6 +25,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "id_book")
     )
     @JsonIgnore
+    @ToString.Exclude
     private Set<Book> books = new HashSet<>();
     @ManyToMany()
     @JoinTable(
@@ -32,7 +34,12 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "id_magazine")
     )
     @JsonIgnore
+    @ToString.Exclude
     private Set<Magazine> magazines = new HashSet<>();
+
+    @OneToMany(mappedBy = "id")
+    @ToString.Exclude
+    private Set<Bookmark> bookmark;
 
     private String email;
     private String firstName;
@@ -41,13 +48,4 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public String toString() {
-        return "\nEmail: "
-                + getEmail()
-                + "\nFirstName: "
-                + getFirstName()
-                + "\nLastName: "
-                + getLastName();
-    }
 }

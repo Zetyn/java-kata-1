@@ -1,9 +1,11 @@
 package org.echocat.kata.java.part1.controllers;
 
 import org.echocat.kata.java.part1.models.Book;
+import org.echocat.kata.java.part1.models.BookText;
+import org.echocat.kata.java.part1.models.BookTextRequestDTO;
 import org.echocat.kata.java.part1.models.Genre;
 import org.echocat.kata.java.part1.service.BookService;
-import org.echocat.kata.java.part1.service.GenreService;
+import org.echocat.kata.java.part1.service.BookTextService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -11,9 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.io.IOException;
-import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @RestController
@@ -22,6 +21,9 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private BookTextService bookTextService;
 
     //--------------Get----------------------------------
     @GetMapping("/books")
@@ -45,6 +47,15 @@ public class BookController {
 //            return bookService.findByGenres(genres);
 //        } else
 //            return bookService.findByTitle(title);
+    }
+
+    @GetMapping("/books/{id}/v{volumeNumber}/c{chapterNumber}")
+    public ResponseEntity<?> getBookText(@PathVariable("id") Long id,
+                                         @PathVariable("volumeNumber") int volumeNumber,
+                                         @PathVariable("chapterNumber") int chapterNumber) {
+        BookText bookText = bookTextService.findByBookIdAndChapterAndVolume(id,chapterNumber,volumeNumber);
+        return ResponseEntity.ok()
+                .body(bookText.getText());
     }
 
     @GetMapping("/books/{id}")
@@ -83,6 +94,17 @@ public class BookController {
     @PostMapping("/books/add-book")
     public ResponseEntity<?> createBook(@RequestBody Book book) {
         return new ResponseEntity<>(bookService.save(book), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/books/{id}/add-chapter")
+    public ResponseEntity<?> createChapter(@ModelAttribute BookTextRequestDTO request,
+                                           @PathVariable("id") long id) {
+        try {
+            bookTextService.save(request.getFile(), request.getChapter(), request.getVolume(),bookService.findById(id));
+            return ResponseEntity.status(HttpStatus.CREATED).body("created");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("failed");
+        }
     }
 
 
