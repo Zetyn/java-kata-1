@@ -18,9 +18,14 @@ public class BookmarkController {
     @Autowired
     private BookmarkService bookmarkService;
 
-    @GetMapping("/books/bookmark/{id}")
+    @GetMapping("/user/bookmarks")
+    public ResponseEntity<?> getBookmarks(@AuthenticationPrincipal User user) {
+        return new ResponseEntity<>(bookmarkService.findByUserEmail(user.getUsername()),HttpStatus.OK);
+    }
+
+    @GetMapping("/book/bookmark/{id}")
     public ResponseEntity<?> getBookmark(@AuthenticationPrincipal User user,@PathVariable("id") Long bookId) {
-        return new ResponseEntity<>(user.getUsername(),HttpStatus.OK);
+        return new ResponseEntity<>(bookmarkService.findByUserEmailAndBook(user.getUsername(), bookId),HttpStatus.OK);
     }
 
     @PostMapping("/books/**")
@@ -28,10 +33,10 @@ public class BookmarkController {
         return new ResponseEntity<>(bookmarkService.saveBookmark(request), HttpStatus.CREATED);
     }
 
-    @Transactional
-    @DeleteMapping("/books/bookmarkDelete")
-    public ResponseEntity<?> deleteBookmark (@RequestBody BookmarkRequestDTO request) {
-        bookmarkService.deleteBookmark(request);
-        return ResponseEntity.ok().build();
-    }
+//    @Transactional
+//    @DeleteMapping("/books/bookmarkDelete")
+//    public ResponseEntity<?> deleteBookmark (@RequestBody BookmarkRequestDTO request,@AuthenticationPrincipal User user) {
+//        bookmarkService.deleteBookmark(request);
+//        return ResponseEntity.ok().build();
+//    }
 }

@@ -1,8 +1,11 @@
 package org.echocat.kata.java.part1.service;
 
 import org.echocat.kata.java.part1.models.Book;
+import org.echocat.kata.java.part1.models.BookRequestDTO;
 import org.echocat.kata.java.part1.models.Genre;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -21,9 +24,7 @@ public interface BookService {
 
     Book findById(Long id);
 
-    Book update(Book book, Long id);
-
-    Book save(Book book);
+    Book save(BookRequestDTO bookRequestDTO, @AuthenticationPrincipal User user);
 
     boolean existsById(Long id);
 

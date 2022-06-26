@@ -16,7 +16,7 @@ import java.util.Set;
 @ToString
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToMany()
     @JoinTable(
@@ -27,15 +27,15 @@ public class User {
     @JsonIgnore
     @ToString.Exclude
     private Set<Book> books = new HashSet<>();
-    @ManyToMany()
-    @JoinTable(
-            name = "magazines_users",
-            joinColumns = @JoinColumn(name = "id_user"),
-            inverseJoinColumns = @JoinColumn(name = "id_magazine")
-    )
-    @JsonIgnore
-    @ToString.Exclude
-    private Set<Magazine> magazines = new HashSet<>();
+//    @ManyToMany()
+//    @JoinTable(
+//            name = "magazines_users",
+//            joinColumns = @JoinColumn(name = "id_user"),
+//            inverseJoinColumns = @JoinColumn(name = "id_magazine")
+//    )
+//    @JsonIgnore
+//    @ToString.Exclude
+//    private Set<Magazine> magazines = new HashSet<>();
 
     @OneToMany(mappedBy = "id")
     @ToString.Exclude

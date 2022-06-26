@@ -2,7 +2,6 @@ package org.echocat.kata.java.part1.service.impl;
 
 import org.echocat.kata.java.part1.models.*;
 import org.echocat.kata.java.part1.repository.UserRepository;
-import org.echocat.kata.java.part1.repository.BookRepository;
 import org.echocat.kata.java.part1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

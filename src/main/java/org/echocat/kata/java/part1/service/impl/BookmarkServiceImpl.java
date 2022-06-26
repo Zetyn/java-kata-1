@@ -6,6 +6,8 @@ import org.echocat.kata.java.part1.repository.BookmarkRepository;
 import org.echocat.kata.java.part1.service.BookmarkService;
 import org.echocat.kata.java.part1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -48,6 +50,11 @@ public class BookmarkServiceImpl implements BookmarkService {
     }
 
     @Override
+    public Iterable<Bookmark> findByUserEmail(String email) {
+        return bookmarkRepository.findByUserEmail(email);
+    }
+
+    @Override
     public Bookmark saveBookmark(BookmarkRequestDTO request) {
         Bookmark userBookmark = bookmarkRepository.findByUserIdAndTitle(request.getUserId(), request.getTitle());
         Iterable<Bookmark> allUserBookmark = bookmarkRepository.findByUserId(request.getUserId());
@@ -80,8 +87,9 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     public Bookmark deleteBookmark(BookmarkRequestDTO request) {
-        Bookmark userBookmark = bookmarkRepository.findByUserIdAndTitle(request.getUserId(), request.getTitle());
-        userBookmark.getBooks().remove(bookRepository.findById(request.getBookId()));
+//        org.echocat.kata.java.part1.models.User u = userService.findByEmail(user.getUsername());
+        Bookmark userBookmark = bookmarkRepository.findByUserIdAndTitle(1L, request.getTitle());
+//        userBookmark.getBooks().remove(bookRepository.findById(request.getBookId()));
         return bookmarkRepository.save(userBookmark);
     }
 }

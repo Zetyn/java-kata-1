@@ -1,18 +1,16 @@
 package org.echocat.kata.java.part1.controllers;
 
-import org.echocat.kata.java.part1.models.Book;
-import org.echocat.kata.java.part1.models.BookText;
-import org.echocat.kata.java.part1.models.BookTextRequestDTO;
-import org.echocat.kata.java.part1.models.Genre;
+import org.echocat.kata.java.part1.models.*;
 import org.echocat.kata.java.part1.service.BookService;
-import org.echocat.kata.java.part1.service.BookTextService;
+import org.echocat.kata.java.part1.service.ChapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.Set;
 
 @RestController
@@ -23,16 +21,13 @@ public class BookController {
     private BookService bookService;
 
     @Autowired
-    private BookTextService bookTextService;
+    private ChapterService chapterService;
 
     //--------------Get----------------------------------
     @GetMapping("/books")
     public ResponseEntity<Iterable<Book>> getBooks(@RequestParam(name = "section", defaultValue = "all") String section,
                                    @RequestParam(name = "genres", required = false) Set<Genre> genres,
                                    @RequestParam(name = "search", required = false) String title) {
-//        if (genres != null && title != null) {
-//            return  new ResponseEntity<>(bookService.findByGenresAndTitle(genres,title),HttpStatus.OK);
-//        }
         if (genres != null) {
             return new ResponseEntity<>(bookService.findByGenres(genres),HttpStatus.OK);
         }
@@ -40,28 +35,42 @@ public class BookController {
             return new ResponseEntity<>(bookService.findByTitle(title),HttpStatus.OK);
         }
         return new ResponseEntity<>(bookService.findAll(),HttpStatus.OK);
-
-//        if (section.equals("all")) {
-//            return bookService.findAll();
-//        } else if (section.equals("byGenres")) {
-//            return bookService.findByGenres(genres);
-//        } else
-//            return bookService.findByTitle(title);
     }
 
-    @GetMapping("/books/{id}/v{volumeNumber}/c{chapterNumber}")
-    public ResponseEntity<?> getBookText(@PathVariable("id") Long id,
+    @GetMapping("/book/{id}/v{volumeNumber}/c{chapterNumber}/text")
+    public ResponseEntity<?> getChapterText(@PathVariable("id") Long id,
                                          @PathVariable("volumeNumber") int volumeNumber,
                                          @PathVariable("chapterNumber") int chapterNumber) {
-        BookText bookText = bookTextService.findByBookIdAndChapterAndVolume(id,chapterNumber,volumeNumber);
+        Chapter chapter = chapterService.findByBookIdAndChapterAndVolume(id,chapterNumber,volumeNumber);
+        String byteToString = new String(chapter.getText());
         return ResponseEntity.ok()
-                .body(bookText.getText());
+                .body(byteToString);
     }
 
-    @GetMapping("/books/{id}")
-    public Book bookDetails(@PathVariable("id") Long id) {
+    @GetMapping("/book/{id}/v{volumeNumber}/c{chapterNumber}")
+    public ResponseEntity<?> getChapter(@PathVariable("id") Long id,
+                                            @PathVariable("volumeNumber") int volumeNumber,
+                                            @PathVariable("chapterNumber") int chapterNumber) {
+        Chapter chapter = chapterService.findByBookIdAndChapterAndVolume(id,chapterNumber,volumeNumber);
+        chapter.setText(null);
+        return ResponseEntity.ok()
+                .body(chapter);
+    }
+
+    @GetMapping("/book/{id}")
+    public ResponseEntity<?> bookDetails(@PathVariable("id") Long id) {
         if (bookService.existsById(id)) {
-            return bookService.findById(id);
+            return ResponseEntity.ok()
+                    .body(bookService.findById(id));
+        }
+        return null;
+    }
+
+    @GetMapping("/book/{id}/chapterCount")
+    public ResponseEntity<?> chapterCount(@PathVariable("id") Long id) {
+        if (bookService.existsById(id)) {
+            return ResponseEntity.ok()
+                    .body(chapterService.findAllChaptersByBook_Id(id));
         }
         return null;
     }
@@ -83,24 +92,24 @@ public class BookController {
     }
 
     //--------------Put----------------------------------
-    @PutMapping("/books/edit/{id}")
-    public ResponseEntity<?> updateBook(@PathVariable("id") Long id, @RequestBody Book book) {
-        bookService.update(book, id);
+    @PutMapping("/book/edit/{id}")
+    public ResponseEntity<?> updateBook(@RequestBody BookRequestDTO book, @AuthenticationPrincipal User user) {
+        bookService.save(book,user);
         return ResponseEntity.ok(book);
     }
 
     //--------------Post----------------------------------
 
-    @PostMapping("/books/add-book")
-    public ResponseEntity<?> createBook(@RequestBody Book book) {
-        return new ResponseEntity<>(bookService.save(book), HttpStatus.CREATED);
+    @PostMapping("/book/add-book")
+    public ResponseEntity<?> createBook(@RequestBody BookRequestDTO book, @AuthenticationPrincipal User user) {
+        return new ResponseEntity<>(bookService.save(book,user), HttpStatus.CREATED);
     }
 
-    @PostMapping("/books/{id}/add-chapter")
-    public ResponseEntity<?> createChapter(@ModelAttribute BookTextRequestDTO request,
-                                           @PathVariable("id") long id) {
+    @PostMapping("/book/{id}/add-chapter")
+    public ResponseEntity<?> createChapter(@RequestBody ChapterRequestDTO request,
+                                           @PathVariable("id") Long id) {
         try {
-            bookTextService.save(request.getFile(), request.getChapter(), request.getVolume(),bookService.findById(id));
+            chapterService.save(request);
             return ResponseEntity.status(HttpStatus.CREATED).body("created");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("failed");
@@ -109,8 +118,7 @@ public class BookController {
 
 
     //--------------Delete----------------------------------
-    @Transactional
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/book/{id}")
     public ResponseEntity<?> deleteBook(@PathVariable("id") Long id) {
         bookService.deleteById(id);
         return ResponseEntity.ok().build();
